@@ -84,3 +84,7 @@ const Modal = ({ item, onClose }: Props) => {
 }
 
 export default Modal
+
+// Ajuste manual forçado
+
+
