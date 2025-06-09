@@ -1,4 +1,4 @@
-import { CardapioItem } from '../types'
+import type { CardapioItem } from '../types'
 import styled from 'styled-components'
 
 const Overlay = styled.div`
