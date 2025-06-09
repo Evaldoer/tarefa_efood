@@ -5,7 +5,7 @@ import Header from '../../components/Header'
 import RestaurantList from '../../components/RestaurantList'
 
 import type { Restaurante } from '../../types'
-import { getRestaurantes } from '../../services/api' // ✅ nova importação
+import { getRestaurantes } from '../../services/api'
 
 const Home = () => {
   const [restaurants, setRestaurants] = useState<Restaurante[]>([])
