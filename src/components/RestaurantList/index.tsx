@@ -1,44 +1,42 @@
-import { Container } from "../../styles"
+import { Container } from '../../styles'
 import { List } from './styles'
 
-import Restaurant from "../Restaurant"
-import type { Restaurants } from '../../pages/Home'
+import Restaurant from '../Restaurant'
+import type { Restaurante } from '../../types'
 
 type Props = {
-    restaurants: Restaurants[]
+  restaurants: Restaurante[]
 }
 
-const RestaurantList = ({restaurants}: Props) => {
-    const getRestaurantTags = (restaurants: Restaurants) => {
-        const tags = [];
-        if (restaurants.destacado) {
-            tags.push(`${restaurants.destacado ? 'Destaque do dia' : ''}`)
-        }
-        if (restaurants.tipo) {
-            tags.push(restaurants.tipo)
-        }
-        return tags
+const RestaurantList = ({ restaurants }: Props) => {
+  const getRestaurantTags = (restaurant: Restaurante) => {
+    const tags = []
+    if (restaurant.destacado) {
+      tags.push('Destaque do dia')
     }
+    if (restaurant.tipo) {
+      tags.push(restaurant.tipo)
+    }
+    return tags
+  }
 
-    return (
-        <Container>
-            <List>
-                {restaurants.map(restaurants => (
-                    <Restaurant 
-                        key={restaurants.id}
-                        id={restaurants.id}
-                        classification={restaurants.avaliacao}
-                        description={restaurants.descricao}
-                        image={restaurants.capa}
-                        infos={getRestaurantTags(restaurants)}
-                        title={restaurants.titulo}
-                    />
-                ))}
-            </List>
-        </Container>
-    )
+  return (
+    <Container>
+      <List>
+        {restaurants.map((restaurant) => (
+          <Restaurant
+            key={restaurant.id}
+            id={restaurant.id}
+            classification={restaurant.avaliacao}
+            description={restaurant.descricao}
+            image={restaurant.capa}
+            infos={getRestaurantTags(restaurant)}
+            title={restaurant.titulo}
+          />
+        ))}
+      </List>
+    </Container>
+  )
 }
-
-
 
 export default RestaurantList

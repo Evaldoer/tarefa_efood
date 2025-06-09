@@ -1,45 +1,40 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
-import FoodList from "../../components/FoodList"
-import Footer from "../../components/Footer"
-import HeaderBanner from "../../components/HeaderBanner"
+import FoodList from '../../components/FoodList'
+import Footer from '../../components/Footer'
+import HeaderBanner from '../../components/HeaderBanner'
 
-import type { CardapioItem, Restaurants } from '../../pages/Home'
+import type { Restaurante } from '../../types'
+import { getRestaurantePorId } from '../../services/api' // ✅ novo import
 
 const Perfil = () => {
-        const [restaurante, setRestaurante] = useState<Restaurants | null>(null)
-        const { id } = useParams()
+  const [restaurante, setRestaurante] = useState<Restaurante | null>(null)
+  const { id } = useParams()
 
-    useEffect(() => {
-        fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
-            .then(resposta => resposta.json())
-            .then(resposta => {
-                const cardapioCorrigido: CardapioItem[] = resposta.cardapio.map((item: any) => ({
-                    ...item,
-                    preco: Number(item.preco)
-                }))
-                setRestaurante({
-                    ...resposta,
-                    cardapio: cardapioCorrigido
-                } as Restaurants)
-            })
-        }, [id])
+  useEffect(() => {
+    if (id) {
+      getRestaurantePorId(id).then((data) => {
+        setRestaurante(data)
+      })
+    }
+  }, [id])
 
-    return(
-        <>
-        {restaurante && (
-            <HeaderBanner 
-                tipo={restaurante.tipo!}
-                titulo={restaurante.titulo!}
-                capa={restaurante.capa!}
-            />
-        )}
-            <FoodList foods={restaurante?.cardapio ?? []} />
-            <Footer />
-        </>
-    )
+  if (!restaurante) {
+    return <p>Carregando restaurante...</p>
+  }
+
+  return (
+    <>
+      <HeaderBanner
+        tipo={restaurante.tipo}
+        titulo={restaurante.titulo}
+        capa={restaurante.capa}
+      />
+      <FoodList foods={restaurante.cardapio} />
+      <Footer />
+    </>
+  )
 }
-
 
 export default Perfil

@@ -1,48 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import RestaurantList from "../../components/RestaurantList";
+import Footer from '../../components/Footer'
+import Header from '../../components/Header'
+import RestaurantList from '../../components/RestaurantList'
 
-export type CardapioItem = {
-    id: number
-    nome: string
-    descricao: string
-    preco: number
-    porcao: string
-    foto: string
-}
-
-export type Restaurants = {
-    foto: string;
-    infos: string[];
-    id: number
-    titulo: string
-    destacado: boolean
-    tipo: string
-    avaliacao: string
-    descricao: string
-    capa: string
-    cardapio: CardapioItem[]
-}
+import type { Restaurante } from '../../types'
+import { getRestaurantes } from '../../services/api' // ✅ nova importação
 
 const Home = () => {
-    const [restaurants, setRestaurants] = useState<Restaurants[]>([])
+  const [restaurants, setRestaurants] = useState<Restaurante[]>([])
 
-    useEffect(() => {
-        fetch('https://fake-api-tau.vercel.app/api/efood/restaurantes')
-            .then(resposta => resposta.json())
-            .then(resposta => setRestaurants(resposta))
-        }, [])
+  useEffect(() => {
+    getRestaurantes().then((dados) => {
+      setRestaurants(dados)
+    })
+  }, [])
 
-    return (
-        <>
-            <Header />
-            <RestaurantList restaurants={restaurants}/>
-            <Footer />
-        </>
-    )
+  return (
+    <>
+      <Header />
+      <RestaurantList restaurants={restaurants} />
+      <Footer />
+    </>
+  )
 }
-
 
 export default Home
