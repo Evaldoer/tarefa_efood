@@ -13,13 +13,20 @@ export const Logo = styled.img`
 
 export const ListLogos = styled.ul`
     display: flex;
-    list-style: none;
-    justify-content: center;
-    padding-top: 32px;
+  gap: 16px; /* Espaço entre os ícones */
+  list-style: none;
+  justify-content: center;
+  padding-top: 32px;
 
-    #twitter{
-        margin: 0 8px;
-    }
+  li a img {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.2s;
+  }
+
+  li a img:hover {
+    transform: scale(1.1);
+  }
 `
 
 export const TextFooter = styled.p`

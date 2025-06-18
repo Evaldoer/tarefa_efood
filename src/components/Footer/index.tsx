@@ -10,23 +10,24 @@ import facebookLogo from '../../assets/facebook.svg'
 const Footer = () => (
     <ContainerFooter>
         <Logo src={logo}  alt='Efood'/>
-        <ListLogos>
-            <li>
-                <a href="#">
-                    <img src={instagramLogo} alt="Instagram" />
-                </a>
-            </li>
-            <li id='twitter'>
-                <a href="#">
-                    <img src={twitterLogo} alt="Instagram" />
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                    <img src={facebookLogo} alt="Instagram" />
-                </a>
-            </li>
-        </ListLogos>
+        <ListLogos aria-label="Redes sociais">
+  <li>
+    <a href="#" target="_blank" rel="noopener noreferrer">
+      <img src={instagramLogo} alt="Instagram" />
+    </a>
+  </li>
+  <li>
+    <a href="#" target="_blank" rel="noopener noreferrer">
+      <img src={twitterLogo} alt="Twitter" />
+    </a>
+  </li>
+  <li>
+    <a href="#" target="_blank" rel="noopener noreferrer">
+      <img src={facebookLogo} alt="Facebook" />
+    </a>
+  </li>
+</ListLogos>
+
         <TextFooter>
             A efood é uma plataforma para divulgação de estabelecimentos, a responsabilidade pela entrega, qualidade dos produtos é toda do estabelecimento contratado.
         </TextFooter>

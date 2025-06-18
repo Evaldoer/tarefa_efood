@@ -1,5 +1,8 @@
 import { useState } from 'react'
-import type { CardapioItem } from '../../types' // ✅ Corrigido o local da importação
+import { useAppDispatch } from '../../store/hooks'
+
+import { add } from '../../store/reducers/cart'
+import type { CardapioItem } from '../../types'
 
 import { List } from './styles'
 import { Container } from '../../styles'
@@ -29,10 +32,18 @@ export const formataPreco = (preco: number) => {
 }
 
 const FoodList = ({ foods }: Props) => {
+  const dispatch = useAppDispatch()
   const [pratoSelecionado, setPratoSelecionado] = useState<CardapioItem | null>(null)
 
   const handleFecharModal = () => {
     setPratoSelecionado(null)
+  }
+
+  const handleAdicionarAoCarrinho = () => {
+    if (pratoSelecionado) {
+      dispatch(add(pratoSelecionado))
+      setPratoSelecionado(null)
+    }
   }
 
   return (
@@ -52,7 +63,7 @@ const FoodList = ({ foods }: Props) => {
       </List>
 
       {pratoSelecionado && (
-        <Modal className='visivel' onClick={handleFecharModal}>
+        <Modal className="visivel" onClick={handleFecharModal}>
           <ModalContent onClick={(e) => e.stopPropagation()}>
             <BotaoFechar src={Fechar} alt="Fechar modal" onClick={handleFecharModal} />
             <ImageModal src={pratoSelecionado.foto} alt={pratoSelecionado.nome} />
@@ -62,7 +73,7 @@ const FoodList = ({ foods }: Props) => {
                 {pratoSelecionado.descricao}
                 <span>{pratoSelecionado.porcao}</span>
               </Description>
-              <ModalButton>
+              <ModalButton onClick={handleAdicionarAoCarrinho}>
                 Adicionar ao carrinho - {formataPreco(pratoSelecionado.preco)}
               </ModalButton>
             </div>

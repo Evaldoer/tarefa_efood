@@ -1,25 +1,30 @@
-// src/services/api.ts
-import axios from 'axios'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import type { Restaurante } from '../types'
 
-const api = axios.create({
-  baseURL: 'https://fake-api-tau.vercel.app/api/efood'
+export const efoodApi = createApi({
+  reducerPath: 'efoodApi',
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://fake-api-tau.vercel.app/api/efood'
+  }),
+  endpoints: (builder) => ({
+    getRestaurantes: builder.query<Restaurante[], void>({
+      query: () => '/restaurantes'
+    }),
+    getRestaurantePorId: builder.query<Restaurante, string>({
+      query: (id) => `/restaurantes/${id}`,
+      transformResponse: (response: Restaurante) => ({
+        ...response,
+        cardapio: response.cardapio.map((item) => ({
+          ...item,
+          preco: Number(item.preco)
+        }))
+      })
+    })
+  })
 })
 
-// Busca todos os restaurantes
-export const getRestaurantes = async () => {
-  const response = await api.get<Restaurante[]>('/restaurantes')
-  return response.data
-}
-
-// Busca restaurante específico
-export const getRestaurantePorId = async (id: string) => {
-  const response = await api.get<Restaurante>(`/restaurantes/${id}`)
-  return {
-    ...response.data,
-    cardapio: response.data.cardapio.map((item) => ({
-      ...item,
-      preco: Number(item.preco)
-    }))
-  }
-}
+// Hooks gerados automaticamente pelo RTK Query
+export const {
+  useGetRestaurantesQuery,
+  useGetRestaurantePorIdQuery
+} = efoodApi

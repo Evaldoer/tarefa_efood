@@ -1,20 +1,22 @@
-import { useEffect, useState } from 'react'
-
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import RestaurantList from '../../components/RestaurantList'
-
-import type { Restaurante } from '../../types'
-import { getRestaurantes } from '../../services/api'
+import { useGetRestaurantesQuery } from '../../services/api'
 
 const Home = () => {
-  const [restaurants, setRestaurants] = useState<Restaurante[]>([])
+  const { data: restaurants, isLoading, error } = useGetRestaurantesQuery()
 
-  useEffect(() => {
-    getRestaurantes().then((dados) => {
-      setRestaurants(dados)
-    })
-  }, [])
+  if (isLoading) {
+    return <p>Carregando restaurantes...</p>
+  }
+
+  if (error || !restaurants) {
+    return <p>Erro ao carregar os restaurantes.</p>
+  }
+
+  if (restaurants.length === 0) {
+    return <p>Nenhum restaurante disponível no momento.</p>
+  }
 
   return (
     <>

@@ -9,7 +9,7 @@ type Props = {
 }
 
 const RestaurantList = ({ restaurants }: Props) => {
-  const getRestaurantTags = (restaurant: Restaurante) => {
+  const getRestaurantTags = (restaurant: Restaurante): string[] => {
     const tags = []
     if (restaurant.destacado) {
       tags.push('Destaque do dia')
@@ -22,19 +22,23 @@ const RestaurantList = ({ restaurants }: Props) => {
 
   return (
     <Container>
-      <List>
-        {restaurants.map((restaurant) => (
-          <Restaurant
-            key={restaurant.id}
-            id={restaurant.id}
-            classification={restaurant.avaliacao}
-            description={restaurant.descricao}
-            image={restaurant.capa}
-            infos={getRestaurantTags(restaurant)}
-            title={restaurant.titulo}
-          />
-        ))}
-      </List>
+      {restaurants.length === 0 ? (
+        <p>Nenhum restaurante disponível no momento.</p>
+      ) : (
+        <List>
+          {restaurants.map((restaurant) => (
+            <Restaurant
+              key={restaurant.id}
+              id={restaurant.id}
+              classification={restaurant.avaliacao}
+              description={restaurant.descricao}
+              image={restaurant.capa}
+              infos={getRestaurantTags(restaurant)}
+              title={restaurant.titulo}
+            />
+          ))}
+        </List>
+      )}
     </Container>
   )
 }

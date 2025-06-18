@@ -1,6 +1,8 @@
 import type { CardapioItem } from '../../types'
 import styled from 'styled-components'
 import { cores } from '../../styles'
+import { useAppDispatch } from '../../store/hooks'
+import { add } from '../../store/reducers/cart'
 
 const Overlay = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
@@ -25,6 +27,13 @@ type Props = {
 }
 
 const Modal = ({ item, onClose }: Props) => {
+  const dispatch = useAppDispatch()
+
+  const handleAddToCart = () => {
+    dispatch(add(item))
+    onClose()
+  }
+
   return (
     <Overlay onClick={onClose}>
       <ModalBox onClick={(e) => e.stopPropagation()}>
@@ -33,6 +42,7 @@ const Modal = ({ item, onClose }: Props) => {
         <p>{item.descricao}</p>
         <p>Porção: {item.porcao}</p>
         <p>Preço: R$ {item.preco.toFixed(2)}</p>
+        <button onClick={handleAddToCart}>Adicionar ao carrinho</button>
         <button onClick={onClose}>Fechar</button>
       </ModalBox>
     </Overlay>

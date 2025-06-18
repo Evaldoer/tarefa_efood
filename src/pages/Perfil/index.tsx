@@ -1,27 +1,21 @@
-import { useEffect, useState } from 'react'
+// src/pages/Perfil/index.tsx
 import { useParams } from 'react-router-dom'
+import { useGetRestaurantePorIdQuery } from '../../services/api'
 
 import FoodList from '../../components/FoodList'
 import Footer from '../../components/Footer'
 import HeaderBanner from '../../components/HeaderBanner'
 
-import type { Restaurante } from '../../types'
-import { getRestaurantePorId } from '../../services/api' // ✅ novo import
-
 const Perfil = () => {
-  const [restaurante, setRestaurante] = useState<Restaurante | null>(null)
   const { id } = useParams()
+  const { data: restaurante, isLoading, error } = useGetRestaurantePorIdQuery(id || '')
 
-  useEffect(() => {
-    if (id) {
-      getRestaurantePorId(id).then((data) => {
-        setRestaurante(data)
-      })
-    }
-  }, [id])
-
-  if (!restaurante) {
+  if (isLoading) {
     return <p>Carregando restaurante...</p>
+  }
+
+  if (error || !restaurante) {
+    return <p>Erro ao carregar restaurante.</p>
   }
 
   return (
