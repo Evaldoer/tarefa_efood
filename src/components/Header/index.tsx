@@ -5,7 +5,7 @@ import { open } from '../../store/reducers/cart'
 import type { RootReducer } from '../../store'
 import Tag from '../Tag'
 import logo from '../../assets/logo.png'
-import fundo from '../../assets/fundo.png'
+import fundo from '../../assets/Fundo.png'
 import * as S from './styles'
 
 type Props = {
