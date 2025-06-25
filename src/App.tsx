@@ -1,31 +1,22 @@
 import { Provider } from 'react-redux'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
-
 import { store } from './store'
-import { GlobalCss } from './styles'
-
-import Home from './pages/Home'
-import Perfil from './pages/Perfil'
+import { BrowserRouter } from 'react-router-dom'
+import Rotas from './routes'
+import GlobalStyle from './styles'
+import { Footer } from './components/Footer'
 import Cart from './components/Cart'
-
-// 🚦 Configuração das rotas
-const rotas = createBrowserRouter([
-  {
-    path: '/',
-    element: <Home />
-  },
-  {
-    path: '/perfil/:id',
-    element: <Perfil />
-  }
-])
+import Order from './components/Order'
 
 function App() {
   return (
     <Provider store={store}>
-      <GlobalCss />
-      <RouterProvider router={rotas} />
-      <Cart /> {/* Carrinho global, visível em todas as rotas */}
+      <BrowserRouter>
+        <GlobalStyle />
+        <Rotas />
+        <Footer />
+        <Cart />
+        <Order />
+      </BrowserRouter>
     </Provider>
   )
 }

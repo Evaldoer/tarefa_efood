@@ -1,37 +1,45 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
-// 🎨 Paleta de cores usada no Figma
-export const cores = {
-  begeclaro: '#FFF8F2',
-  bege: '#FFEBD9',
-  rose: '#E66767',
-  branca: '#FFFFFF',
+export const Colors = {
+  textColor: '#E66767',
+  mainBackground: '#FFF8F2',
+  footerBackground: '#FFEBD9',
+  blackText: '#4b4b4b'
 }
 
-// 🌐 Estilos globais da aplicação
-export const GlobalCss = createGlobalStyle`
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
-    text-decoration: none;
-  }
+export const breakpoints = {
+  tablet: '1023px',
+  mobile: '767px'
+}
 
-  body {
-    background-color: ${cores.begeclaro};
-    color: #333;
-  }
+const GlobalStyle = createGlobalStyle`
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  font-family: "Roboto", sans-serif;
+}
 
-  button {
-    font-family: 'Roboto', sans-serif;
-  }
-`
+body {
+  background-color: ${Colors.mainBackground};
+  color: ${Colors.textColor};
+}
 
-// 📦 Container padrão para centralizar conteúdo
-export const Container = styled.div`
+.container {
   max-width: 1024px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 16px;
+  z-index: 1;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    max-width: 80%;
+  }
+
+  @media (max-width: ${breakpoints.mobile}) {
+    max-width: 80%;
+  }
+}
 `
+
+export default GlobalStyle

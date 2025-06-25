@@ -1,30 +1,20 @@
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
-import RestaurantList from '../../components/RestaurantList'
+
 import { useGetRestaurantesQuery } from '../../services/api'
+import { Listagem } from '../../containers/Listagem'
+import Header from '../../components/Header'
 
 const Home = () => {
-  const { data: restaurants, isLoading, error } = useGetRestaurantesQuery()
+  const { data: restaurantes } = useGetRestaurantesQuery()
 
-  if (isLoading) {
-    return <p>Carregando restaurantes...</p>
+  if (restaurantes) {
+    return (
+      <>
+        <Header type="headerHome" />
+        <Listagem restaurantes={restaurantes} />
+      </>
+    )
   }
-
-  if (error || !restaurants) {
-    return <p>Erro ao carregar os restaurantes.</p>
-  }
-
-  if (restaurants.length === 0) {
-    return <p>Nenhum restaurante disponível no momento.</p>
-  }
-
-  return (
-    <>
-      <Header />
-      <RestaurantList restaurants={restaurants} />
-      <Footer />
-    </>
-  )
+  return <h4>Carregando...</h4>
 }
 
 export default Home

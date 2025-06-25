@@ -1,34 +1,26 @@
-// src/pages/Perfil/index.tsx
-import { useParams } from 'react-router-dom'
-import { useGetRestaurantePorIdQuery } from '../../services/api'
 
-import FoodList from '../../components/FoodList'
-import Footer from '../../components/Footer'
-import HeaderBanner from '../../components/HeaderBanner'
+import { useParams } from 'react-router-dom'
+import Header from '../../components/Header'
+import { Cardapio } from '../../containers/Cardapio'
+import {
+  useGetCardapioQuery,
+  useGetRestauranteIdQuery
+} from '../../services/api'
 
 const Perfil = () => {
   const { id } = useParams()
-  const { data: restaurante, isLoading, error } = useGetRestaurantePorIdQuery(id || '')
+  const { data: menu } = useGetCardapioQuery(id!)
+  const { data: restaurante } = useGetRestauranteIdQuery(id!)
 
-  if (isLoading) {
-    return <p>Carregando restaurante...</p>
+  if (restaurante && menu) {
+    return (
+      <>
+        <Header type="headerMenu" restaurantes={restaurante} />
+        <Cardapio items={menu} />
+      </>
+    )
   }
-
-  if (error || !restaurante) {
-    return <p>Erro ao carregar restaurante.</p>
-  }
-
-  return (
-    <>
-      <HeaderBanner
-        tipo={restaurante.tipo}
-        titulo={restaurante.titulo}
-        capa={restaurante.capa}
-      />
-      <FoodList foods={restaurante.cardapio} />
-      <Footer />
-    </>
-  )
+  return <h2>Carregando...</h2>
 }
 
 export default Perfil

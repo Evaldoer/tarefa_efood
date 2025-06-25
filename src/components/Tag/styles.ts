@@ -1,18 +1,15 @@
+
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { Colors } from '../../styles'
 
-import type { Props } from '.'
-
-export const TagContainer = styled.div<Props>`
-  background-color: ${cores.rose};
-  color: ${cores.branca};
-  font-weight: 700;
-  font-size: ${(props) => (props.size === 'big' ? '14px' : '12px')};
-  padding: ${(props) => (props.size === 'big' ? '6px 12px' : '4px 8px')};
-  border-radius: 4px;
-  max-width: ${(props) => (props.size === 'big' ? '180px' : '100px')};
-  margin: 8px 4px 0 0;
-  white-space: nowrap;
+export const TagContainer = styled.div`
+  background-color: ${Colors.textColor};
+  color: ${Colors.footerBackground};
+  font-size: 12px;
   text-align: center;
+  font-weight: 700;
+  padding: 6px 10px;
+  margin-left: 16px;
+  line-height: 14px;
   display: inline-block;
 `

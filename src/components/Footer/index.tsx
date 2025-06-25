@@ -1,37 +1,48 @@
-import { ContainerFooter, Logo, ListLogos, TextFooter } from './styles'
+import logo from '../../assets/logo.png'
+import instagram from '../../assets/instagram.png'
+import facebook from '../../assets/facebook.png'
+import twitter from '../../assets/twitter.png'
+import * as S from './styles'
 
-import logo from '../../assets/logo.svg'
-import instagramLogo from '../../assets/instagram.svg'
-import twitterLogo from '../../assets/twitter.svg'
-import facebookLogo from '../../assets/facebook.svg'
+export const Footer = () => {
+  const getYear = () => {
+    return new Date().getFullYear()
+  }
 
-
-
-const Footer = () => (
-    <ContainerFooter>
-        <Logo src={logo}  alt='Efood'/>
-        <ListLogos aria-label="Redes sociais">
-  <li>
-    <a href="#" target="_blank" rel="noopener noreferrer">
-      <img src={instagramLogo} alt="Instagram" />
-    </a>
-  </li>
-  <li>
-    <a href="#" target="_blank" rel="noopener noreferrer">
-      <img src={twitterLogo} alt="Twitter" />
-    </a>
-  </li>
-  <li>
-    <a href="#" target="_blank" rel="noopener noreferrer">
-      <img src={facebookLogo} alt="Facebook" />
-    </a>
-  </li>
-</ListLogos>
-
-        <TextFooter>
-            A efood é uma plataforma para divulgação de estabelecimentos, a responsabilidade pela entrega, qualidade dos produtos é toda do estabelecimento contratado.
-        </TextFooter>
-    </ContainerFooter>
-)
-
-export default Footer
+  return (
+    <S.FooterContainer>
+      <img src={logo} alt="Logo eFood" />
+      <div>
+        <S.SocialContainer>
+          <li>
+            <a href="#">
+              <img src={instagram} alt="Instagram" />
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <img src={facebook} alt="Facebook" />
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <img src={twitter} alt="Twitter" />
+            </a>
+          </li>
+        </S.SocialContainer>
+        <p>
+          {getYear()}- &copy;
+          <a href="#">
+            <strong>#</strong>
+          </a>{' '}
+          - Todos os direitos reservados
+        </p>
+        <p>
+          A eFood é uma plataforma para divulgação de estabelecimentos, a
+          responsabilidade pela entrega, qualidade dos produtos é toda do
+          estabelecimento contratado.{' '}
+        </p>
+      </div>
+    </S.FooterContainer>
+  )
+}
