@@ -1,60 +1,76 @@
-import { useDispatch, useSelector } from 'react-redux'
-import type { RootReducer } from '../../store'
-import { close, remove } from '../../store/reducers/cart'
-import { openDelivery } from '../../store/reducers/delivery'
-import Button from '../Button'
-import * as S from './styles'
-import { ParseToBrl, getTotalPrice } from '../../utils'
+import { useDispatch, useSelector } from "react-redux";
+import type { RootReducer } from "../../store";
+import { close, remove } from "../../store/reducers/cart";
+import { openDelivery } from "../../store/reducers/delivery";
+import Button from "../Button";
+import * as S from "./styles";
+import { ParseToBrl, getTotalPrice } from "../../utils";
 
 const Cart = () => {
-  const { isOpen, items: itens } = useSelector(
-    (state: RootReducer) => state.cart
-  )
-  const dispatch = useDispatch()
-  const closeCart = () => {
-    dispatch(close())
-  }
+  const dispatch = useDispatch();
 
-  const deliveryOpen = () => {
-    dispatch(openDelivery())
-  }
+  const { isOpen, items } = useSelector((state: RootReducer) => state.cart);
 
-  const removeItem = (id: number) => {
-    if (itens.length === 1) {
-      dispatch(close())
+  const handleCloseCart = () => {
+    dispatch(close());
+  };
+
+  const handleOpenDelivery = () => {
+    dispatch(openDelivery());
+  };
+
+  const handleRemoveItem = (id: number) => {
+    dispatch(remove(id));
+
+    // Se for o último item, fecha o carrinho após remover
+    if (items.length === 1) {
+      dispatch(close());
     }
-    dispatch(remove(id))
-  }
+  };
 
   return (
-    <S.CartContainer className={isOpen ? 'is-open' : ''}>
-      <S.Overlay onClick={closeCart} />
+    <S.CartContainer className={isOpen ? "is-open" : ""}>
+      <S.Overlay onClick={handleCloseCart} />
+
       <S.Sidebar>
-        <ul>
-          {itens.map((item) => (
-            <S.CartItem key={item.id}>
-              <img src={item.foto} alt={item.nome} />
-              <div>
-                <h3>{item.nome}</h3>
-                <span>{ParseToBrl(item.preco)}</span>
-              </div>
-              <button onClick={() => removeItem(item.id)} type="button" />
-            </S.CartItem>
-          ))}
-        </ul>
-        <S.Prices>
-          <p>Valor total</p> <span>{ParseToBrl(getTotalPrice(itens))}</span>
-        </S.Prices>
-        <Button
-          onClick={deliveryOpen}
-          type="product-link"
-          title="Clique aqui para continuar com a entrega"
-        >
-          Continuar com a entrega
-        </Button>
+        {items.length === 0 ? (
+          <p style={{ padding: "16px" }}>Seu carrinho está vazio.</p>
+        ) : (
+          <>
+            <ul>
+              {items.map((item) => (
+                <S.CartItem key={item.id}>
+                  <img src={item.foto} alt={item.nome} />
+                  <div>
+                    <h3>{item.nome}</h3>
+                    <span>{ParseToBrl(item.preco)}</span>
+                  </div>
+                  <button
+                    onClick={() => handleRemoveItem(item.id)}
+                    type="button"
+                    aria-label={`Remover ${item.nome} do carrinho`}
+                  />
+                </S.CartItem>
+              ))}
+            </ul>
+
+            <S.Prices>
+              <p>Valor total</p>
+              <span>{ParseToBrl(getTotalPrice(items))}</span>
+            </S.Prices>
+
+            <Button
+              onClick={handleOpenDelivery}
+              type="product-link"
+              title="Clique aqui para continuar com a entrega"
+            >
+              Continuar com a entrega
+            </Button>
+          </>
+        )}
       </S.Sidebar>
     </S.CartContainer>
-  )
-}
+  );
+};
 
-export default Cart
+export default Cart;

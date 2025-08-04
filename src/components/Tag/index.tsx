@@ -1,10 +1,14 @@
-
 import { TagContainer } from './styles'
 
 type Props = {
   children: string
+  title?: string
 }
 
-const Tag = ({ children }: Props) => <TagContainer>{children}</TagContainer>
+const Tag = ({ children, title }: Props) => (
+  <TagContainer title={title || `Categoria: ${children}`}>
+    {children}
+  </TagContainer>
+)
 
 export default Tag

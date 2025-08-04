@@ -35,20 +35,20 @@ type PurchaseResponse = {
 }
 
 const api = createApi({
+  reducerPath: 'efoodApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://fake-api-tau.vercel.app/api/efood'
+    baseUrl: 'https://ebac-fake-api.vercel.app/api/efood'
   }),
   endpoints: (builder) => ({
     getCardapio: builder.query<MenuItensType[], string>({
       query: (id) => `restaurantes/${id}`,
-      transformResponse: (response: Restaurante) => {
-        return response.cardapio
-      }
+      // Aqui o response é Restaurante com campo cardapio do tipo MenuItensType[]
+      transformResponse: (response: Restaurante) => response.cardapio
     }),
     getRestaurantes: builder.query<Restaurante[], void>({
       query: () => 'restaurantes'
     }),
-    getRestauranteId: builder.query<Restaurante, string>({ // <-- CORRIGIDO AQUI
+    getRestauranteId: builder.query<Restaurante, string>({
       query: (id) => `restaurantes/${id}`
     }),
     purchase: builder.mutation<PurchaseResponse, PurchasePayload>({

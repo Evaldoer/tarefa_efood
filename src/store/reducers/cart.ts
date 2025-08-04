@@ -20,7 +20,9 @@ const CartSlice = createSlice({
       if (!menuItem) {
         state.items.push(action.payload)
       } else {
-        alert('Item já adicionado ao carrinho!')
+        // Evite efeitos colaterais no reducer (alert)
+        // Pode lançar um erro ou retornar um valor especial para tratar fora
+        // Aqui deixo só o comentário para lembrar
       }
     },
     remove: (state, action: PayloadAction<number>) => {

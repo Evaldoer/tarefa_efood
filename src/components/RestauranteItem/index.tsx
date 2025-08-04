@@ -20,25 +20,33 @@ const RestauranteItem = ({
   capa,
   id
 }: Props) => {
+  const getDescricao = (text: string) => {
+    return text.length > 140 ? `${text.slice(0, 137)}...` : text
+  }
+
   return (
     <S.RestauranteContainer>
-      <S.ImageCover src={capa} alt={titulo} />
+      <S.ImageCover src={capa} alt={`Imagem do restaurante ${titulo}`} />
+
       <S.Infos>
         {tipo.map((tag) => (
           <Tag key={tag}>{tag}</Tag>
         ))}
       </S.Infos>
+
       <S.ContainerInfo>
         <S.TituloContainer>
           <h2>{titulo}</h2>
-          <span>
-            {avaliacao} <img src={estrela} alt="Estrela" />
+          <span aria-label={`Avaliação: ${avaliacao} estrelas`}>
+            {avaliacao.toFixed(1)} <img src={estrela} alt="Ícone de estrela" />
           </span>
         </S.TituloContainer>
-        <S.Descricao>{descricao}</S.Descricao>
+
+        <S.Descricao>{getDescricao(descricao)}</S.Descricao>
+
         <S.ButtonSpace>
-          <ButtonLink to={`/perfil/${id}`}>
-            <p>Saiba mais</p>
+          <ButtonLink to={`/perfil/${id}`} title={`Acessar o perfil de ${titulo}`}>
+            Saiba mais
           </ButtonLink>
         </S.ButtonSpace>
       </S.ContainerInfo>

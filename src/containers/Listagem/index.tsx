@@ -6,18 +6,28 @@ export type Props = {
 }
 
 export const Listagem = ({ restaurantes }: Props) => {
-  const tagsRestaurante = (restaurantes: Restaurante) => {
-    const tags = []
+  // Gera tags com base nas propriedades do restaurante
+  const getTags = (restaurante: Restaurante): string[] => {
+    const tags: string[] = []
 
-    if (restaurantes.destacado) {
+    if (restaurante.destacado) {
       tags.push('Destaque da semana')
     }
-    if (restaurantes.tipo) {
-      tags.push(
-        restaurantes.tipo.charAt(0).toUpperCase() + restaurantes.tipo.slice(1)
-      )
+
+    if (restaurante.tipo) {
+      // Capitaliza o primeiro caractere do tipo
+      tags.push(restaurante.tipo[0].toUpperCase() + restaurante.tipo.slice(1))
     }
+
     return tags
+  }
+
+  if (!restaurantes || restaurantes.length === 0) {
+    return (
+      <div className="container">
+        <p>Nenhum restaurante encontrado.</p>
+      </div>
+    )
   }
 
   return (
@@ -27,7 +37,7 @@ export const Listagem = ({ restaurantes }: Props) => {
           <RestauranteItem
             titulo={restaurante.titulo}
             capa={restaurante.capa}
-            tipo={tagsRestaurante(restaurante)}
+            tipo={getTags(restaurante)}
             descricao={restaurante.descricao}
             avaliacao={restaurante.avaliacao}
             id={restaurante.id}
